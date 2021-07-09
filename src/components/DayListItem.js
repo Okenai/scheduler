@@ -3,8 +3,7 @@ import "components/DayListItem.scss"
 import classNames from 'classnames';
 
 export default function DayListItem(props) {
-  let itemClass = classNames({
-    'day-list__item': true,
+  let itemClass = classNames('day-list__item', {
     'day-list__item--selected': props.selected,
     'day-list__item--full': props.spots === 0
   })
@@ -12,8 +11,8 @@ export default function DayListItem(props) {
     if(input === 0) {return 'no spots remaining'};
     if(input === 1) {return '1 spot remaining'};
     if(input > 1) {return `${input} spots remaining`}
-
   }
+
   return (
     <li className={itemClass} onClick={() => props.setDay(props.name)}>
       <h2 className="text--regular">{props.name}</h2>
