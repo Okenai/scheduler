@@ -1,8 +1,8 @@
 import React from "react";
 
 const Show = function (props) {
-  return (
-    <main className="appointment__card appointment__card--show">
+    return (
+      <main className="appointment__card appointment__card--show">
       <section className="appointment__card-left">
         <h2 className="text--regular">{props.student}</h2>
         <section className="interviewer">
