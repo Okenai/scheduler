@@ -19,16 +19,8 @@ export function getInterview(state, interview) {
 
   const interviewers = Object.values(state.interviewers)
 
-  let appointmentInterviewer;
-  if (interview && interview.interviewer && interview.interviewer.name) {
-   appointmentInterviewer = interview.interviewer
-   interviewData.student = interview.student;
-   interviewData.interviewer = appointmentInterviewer;
-   return interviewData;
-  }
-  
   for (let each of interviewers) {
-    // console.log("interviewe from getInterview", interview)
+ 
     if (interview && each.id === interview.interviewer) {
       interviewData.student = interview.student;
       interviewData.interviewer = {
@@ -58,7 +50,3 @@ export function getInterviewersForDay(state, day) {
   return interviewersForDay;
 }
 
-export function getInterviewerById(state, id) {
-  console.log("state from selector", state)
-  return state.interviewers[id]
-}

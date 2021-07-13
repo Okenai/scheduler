@@ -9,7 +9,6 @@ import Status from './Status';
 import Confirm from './Confirm';
 import Error from './Error';
 import useVisualMode from 'hooks/useVisualMode';
-import { getInterviewerById } from 'helpers/selectors';
 
 export default function Appointment(props) {
   const EMPTY = "EMPTY";
@@ -26,13 +25,6 @@ export default function Appointment(props) {
     props.interview ? SHOW : EMPTY
   );
   
-  // useEffect(()=> {
-  //   console.log("props in useEffect", props.interview)
-  //   if (props.interview) {
-  //     transition(SHOW)
-  //   }
-  // }, [props.interview])
-
   function save(name, interviewer) {
     const interview = {
       student: name,
@@ -46,7 +38,10 @@ export default function Appointment(props) {
         transition(SHOW)
       }
       )
-      .catch(() => transition(ERROR_SAVE, true))
+      .catch((err) => {
+        console.log(err);
+        transition(ERROR_SAVE, true)
+      })
   };
 
   function empty() {
@@ -56,9 +51,7 @@ export default function Appointment(props) {
       .then(response => transition(EMPTY))
       .catch(() => transition(ERROR_DELETE, true))
   }
- if (mode === SHOW) {
-  console.log("props", props)
- }
+
   return (
     <article className='appointment'>
       <Header time={props.time} />
