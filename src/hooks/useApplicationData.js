@@ -9,30 +9,19 @@ export default function useApplicationData() {
     interviewers: {}
   });
 
-  const updateSpots = function (id, days, updatedAppointments) {
+  const updateSpots = function (dayName, days, appointments) {
+    const dayObj = days.find(item => item.name == dayName);
+    let spots = 0;
     
-    let appointmentDay;
-    let indexOfDay;
-    // console.log("before days:", days)
-    for (let day of days) {
-      if (day.name === state.day) {
-        appointmentDay = {...day};
-        indexOfDay = days.indexOf(day);
-        break;
+    for (const id of dayObj.appointments) {
+      if (!appointments[id].interview) {
+        spots++;
       }
     }
-    // console.log("days after : ", days)
-    let totalSpots = appointmentDay.appointments.length;
+    const newDay = { ...dayObj, spots };
 
-    for (let each of appointmentDay.appointments) {
-      if (updatedAppointments[each].interview !== null) {
-        totalSpots--;
-      };
-    }
-    
-    days[indexOfDay].spots = totalSpots;
-    
-    return days;
+    const newDays = days.map(item => (item.name === dayName) ? newDay : item);
+    return newDays
   };
 
   function bookInterview(id, interview) {
@@ -55,22 +44,19 @@ export default function useApplicationData() {
       [id]: appointment
     };
 
-      console.log("State before:", state.days)
-
-      console.log("before: ", state.days[0].spots)
-      let daysCopy = [...state.days]
-        let days = updateSpots(id, daysCopy, appointments);
-
+    console.log("before: ", state.days[0].spots)
     return axios
       .put(`/api/appointments/${id}`, appointment)
       .then(response => {
-        
-        console.log("after: ", state.days[0].spots)
+
+        let days = updateSpots(state.day, state.days, appointments);
+
         setState({ ...state, days, appointments });
-     })
-      
+        console.log("after: ", state.days[0].spots)
+      })
+
   };
-  
+
   function cancelInterview(id) {
     const appointment = {
       ...state.appointments[id]
@@ -82,14 +68,12 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
-
+    console.log("before: ", state.days[0].spots)
 
     return axios
       .delete(`/api/appointments/${id}`, appointment)
       .then(response => {
-        let daysCopy = [...state.days]
-        console.log("before: ", state.days[0].spots)
-        let days = updateSpots(id, daysCopy, appointments);
+        let days = updateSpots(state.day, state.days, appointments);
         console.log("after: ", state.days[0].spots)
         setState({ ...state, days, appointments })
       }

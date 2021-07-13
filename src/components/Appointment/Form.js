@@ -1,19 +1,41 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Button from "components/Button";
 import InterviewerList from "components/InterviewerList";
 
 const Form = function (props) {
-  const [name, setName] = useState(props.name || '')
-  const [interviewer, setInterviewer] = useState(props.interviewer || null)
+  const [name, setName] = useState(props.name || '');
+  const [interviewer, setInterviewer] = useState(props.interviewer || null);
+  const [error, setError] = useState("");
 
-  const reset = function(){
+  const reset = function () {
     setName('');
     setInterviewer(null)
   }
 
-  const cancel = function(){
+  const cancel = function () {
     reset();
     props.onCancel();
+  }
+
+  function validate() {
+    if (name === "") {
+      setError("Student name cannot be blank");
+      return;
+    }
+    // if (!interviewer) {
+    //   setError("Please choose an interviewer");
+    //   return;
+    // }
+
+    props.onSave(name, interviewer);
+  }
+
+  const onChange = function (event) {
+    const text = event.target.value;
+
+    setError(text.length ? "" : "Student name cannot be blank")
+
+    setName(text)
   }
 
   return (
@@ -23,21 +45,23 @@ const Form = function (props) {
           <input
             className="appointment__create-input text--semi-bold"
             value={name}
-            onChange={event => setName(event.target.value)}
+            onChange={onChange}
             type="text"
             name="name"
             placeholder="Enter Student Name"
+            data-testid="student-name-input"
           /*
             This must be a controlled component
           */
           />
         </form>
-        <InterviewerList interviewers={props.interviewers} interviewer={interviewer} setInterviewer={setInterviewer}/>
+        <InterviewerList interviewers={props.interviewers} interviewer={interviewer} setInterviewer={setInterviewer} />
       </section>
+      <section className="appointment__validation">{error}</section>
       <section className="appointment__card-right">
         <section className="appointment__actions">
           <Button onClick={cancel} danger>Cancel</Button>
-          <Button onClick={() => {props.onSave(name, interviewer)}} confirm>Save</Button>
+          <Button onClick={validate} confirm>Save</Button>
         </section>
       </section>
     </main>
