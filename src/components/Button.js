@@ -12,6 +12,7 @@ export default function Button(props) {
   return (
     <button 
     className={buttonClass}
+    id={props.confirm ? "save--button" : "cancel--button"}
     onClick={props.onClick}
     disabled={props.disabled}
     >
