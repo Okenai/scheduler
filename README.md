@@ -1,5 +1,12 @@
 # Interview Scheduler
 
+!["Main page"](screenshots/1.jpg)
+!["Form for a new appointment"](screenshots/2.jpg)
+!["Creating/Editing appointment form"](screenshots/3.jpg)
+!["Saving"](screenshots/4.jpg)
+!["Deleting message"](screenshots/5.jpg)
+!["Deleting"](screenshots/6.jpg)
+
 ## Setup
 
 Install dependencies with `npm install`.
