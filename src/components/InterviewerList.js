@@ -12,9 +12,10 @@ export default function InterviewerList(props) {
         name={interviewer.name}
         avatar={interviewer.avatar}
         setInterviewer={() => {
-          console.log("apple")
           props.setInterviewer(interviewer.id)
+          
         }}
+        setError={()=> props.setError('')}
         selected={props.interviewer === interviewer.id}
       />
     )

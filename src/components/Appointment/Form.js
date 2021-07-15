@@ -54,7 +54,7 @@ const Form = function (props) {
             data-testid="student-name-input"
           />
         </form>
-        <InterviewerList interviewers={props.interviewers} interviewer={interviewer} setInterviewer={setInterviewer} />
+        <InterviewerList interviewers={props.interviewers} interviewer={interviewer} setInterviewer={setInterviewer} setError={setError}/>
       </section>
       <section className="appointment__validation">{error}</section>
       <section className="appointment__card-right">
