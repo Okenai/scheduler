@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import './styles.scss';
-import classNames from 'classnames';
 import Header from './Header';
 import Show from './Show';
 import Empty from './Empty';
@@ -26,6 +25,7 @@ export default function Appointment(props) {
   );
   
   function save(name, interviewer) {
+    console.log("interviewer:", interviewer)
     const interview = {
       student: name,
       interviewer

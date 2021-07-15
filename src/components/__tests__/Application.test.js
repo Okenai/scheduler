@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { render, cleanup, waitForElement, fireEvent, getByText, prettyDOM, getAllByTestId, getByAltText, getByPlaceholderText, queryByText, queryByAltText } from "@testing-library/react";
+import { render, cleanup, waitForElement, fireEvent, getByText, prettyDOM, getAllByTestId, getByAltText, getByPlaceholderText, queryByText, queryByAltText, waitForElementToBeRemoved } from "@testing-library/react";
 
 import Application from "components/Application";
 
@@ -35,8 +35,8 @@ describe("Application", () => {
     fireEvent.click(getByText(appointment, "Save"));
     expect(getByText(appointment, "Saving")).toBeInTheDocument()
 
-    await waitForElement(() => getByText(container, "Lydia Miller-Jones"))
-    // await waitForElementToBeRemoved(() => getByText(container, "Saving")) 
+    // await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"))
+    await waitForElementToBeRemoved(() => getByText(appointment, "Saving")) 
     expect(getByText(appointment, "Lydia Miller-Jones")).toBeInTheDocument()
     expect(getByText(day, "Monday")).toBeInTheDocument()
     expect(getByText(day, "no spots remaining")).toBeInTheDocument()

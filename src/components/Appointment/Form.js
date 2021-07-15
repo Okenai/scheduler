@@ -16,20 +16,21 @@ const Form = function (props) {
     reset();
     props.onCancel();
   }
-
+  //validate function to deal with error of user not typing student name and not choosing the interviewer
   function validate() {
     if (name === "") {
       setError("Student name cannot be blank");
       return;
     }
-    // if (!interviewer) {
-    //   setError("Please choose an interviewer");
-    //   return;
-    // }
-
+    if (!interviewer) {
+      console.log("orange")
+      setError("Please choose an interviewer");
+      return;
+    }
+  
     props.onSave(name, interviewer);
   }
-
+  //onChange function to control the error message for student name
   const onChange = function (event) {
     const text = event.target.value;
 
@@ -37,6 +38,7 @@ const Form = function (props) {
 
     setName(text)
   }
+  
 
   return (
     <main className="appointment__card appointment__card--create">

@@ -52,13 +52,13 @@ describe("Form", () => {
     />);
    
     fireEvent.change(getByPlaceholderText("Enter Student Name"), {target: {value: "Lydia Miller-Jones"}})
-    // fireEvent.click(getByAltText("Sylvia Palmer"))
+    fireEvent.click(getByAltText("Sylvia Palmer"))
      /* 3. Click the save button */
      fireEvent.click(getByText("Save"));
 
      expect(onSave).toHaveBeenCalledTimes(1);
     
-     expect(onSave).toHaveBeenCalledWith("Lydia Miller-Jones", null);
+     expect(onSave).toHaveBeenCalledWith("Lydia Miller-Jones", 1);
      expect(queryByText(/student name cannot be blank/i)).toBeNull();
   });
 
@@ -76,12 +76,12 @@ describe("Form", () => {
     fireEvent.change(getByPlaceholderText("Enter Student Name"), {
       target: { value: "Lydia Miller-Jones" }
     });
-    // fireEvent.click(getByAltText("Sylvia Palmer"))
+    fireEvent.click(getByAltText("Sylvia Palmer"))
     fireEvent.click(getByText("Save"));
-    expect(queryByText(/student name cannot be blank/i)).toBeNull();
     expect(onSave).toHaveBeenCalledTimes(1);
-    expect(onSave).toHaveBeenCalledWith("Lydia Miller-Jones", null);
-    
+    expect(onSave).toHaveBeenCalledWith("Lydia Miller-Jones", 1);
+    expect(queryByText(/student name cannot be blank/i)).toBeNull();
+
   });
   
   it("calls onCancel and resets the input field", () => {
