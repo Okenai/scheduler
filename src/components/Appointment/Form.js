@@ -23,7 +23,6 @@ const Form = function (props) {
       return;
     }
     if (!interviewer) {
-      console.log("orange")
       setError("Please choose an interviewer");
       return;
     }
