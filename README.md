@@ -1,7 +1,7 @@
 # Interview Scheduler
 A single page app for booking appointments, build with React, tested with jest and cypress.
 
-#Screenshots
+# Screenshots
 
 Main page
 !["Main page"](screenshots/1.jpg)
