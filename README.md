@@ -1,6 +1,8 @@
 # Interview Scheduler
-A single page app for booking appointments, build with React, tested with jest and cypress.
+<span style="font-family: 'Lucida Console';">A single page app for booking appointments, build with React, tested with jest and cypress.</span>
+
 Screenshots
+
 Main page
 !["Main page"](screenshots/1.jpg)
 Form for creating an appointment
