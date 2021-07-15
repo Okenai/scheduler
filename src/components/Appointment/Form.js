@@ -50,9 +50,6 @@ const Form = function (props) {
             name="name"
             placeholder="Enter Student Name"
             data-testid="student-name-input"
-          /*
-            This must be a controlled component
-          */
           />
         </form>
         <InterviewerList interviewers={props.interviewers} interviewer={interviewer} setInterviewer={setInterviewer} />

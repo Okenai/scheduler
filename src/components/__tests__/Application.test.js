@@ -110,25 +110,45 @@ describe("Application", () => {
   });
 
   it("shows the save error when failing to save an appointment", async () => {
-    axios.put.mockRejectedValueOnce();
-    const { container } = render(<Application />);
+    
+    const { container, debug } = render(<Application />);
 
     await waitForElement(() => getByText(container, "Archie Cohen"));
+
     const appointment = getAllByTestId(container, "appointment")[0];
+
     fireEvent.click(getByAltText(appointment, "Add"));
+
     fireEvent.change(getByPlaceholderText(appointment, "Enter Student Name"), {
       target: { value: "Lydia Miller-Jones" }
     });
-    fireEvent.click(getByAltText(appointment, "Sylvia Palmer"))
+
+    fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
+    axios.put.mockRejectedValueOnce();
     fireEvent.click(getByText(appointment, "Save"));
 
-    await waitForElement(() => getByText(appointment, "Something went wrong")).toBeInTheDocument()
+    expect(getByText(appointment, "Saving")).toBeInTheDocument();
 
-    console.log(prettyDOM(appointment))
+    await waitForElement(() => getByText(appointment, "something went wrong"));
   });
 
-  // it("shows the delete error when failing to delete an existing appointment", () => {
-  //   axios.delete.mockRejectedValueOnce();
-  // })
+  it("shows the delete error when failing to delete an existing appointment", async () => {
+    
+    const { container, debug } = render(<Application />);
+
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+
+    const appointment = getAllByTestId(container, "appointment").find(
+      appointment => queryByText(appointment, "Archie Cohen")
+    );
+   
+    fireEvent.click(queryByAltText(appointment, "Delete"));
+    axios.delete.mockRejectedValueOnce();
+    expect(getByText(appointment, "Are you sure you want to delete?")).toBeInTheDocument();
+    fireEvent.click(queryByText(appointment, "Confirm"));
+    
+    expect(getByText(appointment, "Deleting")).toBeInTheDocument()
+    await waitForElement(() => getByText(appointment, "something went wrong"));
+  })
 
 })
